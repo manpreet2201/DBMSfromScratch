@@ -80,14 +80,13 @@ public class Update {
 			// SET Clause
 			String setClause = og_sql.substring(og_sql.indexOf("SET"), og_sql.indexOf("WHERE"));
 			setClause = setClause.replace("SET ", "");
-			setClause = setClause.replace("'", "");
+			setClause = setClause.replaceAll("[^a-zA-Z0-9=,]", "");
 			String[] setParams = setClause.split(",");
 
 			// WHERE Clause
 			String whereClause = og_sql.substring(og_sql.indexOf("WHERE"), og_sql.length());
 			whereClause = whereClause.replace("WHERE", "").trim();
-			whereClause = whereClause.replace("'", "");
-			whereClause = whereClause.replace(";", "");
+			whereClause = whereClause.replaceAll("[^a-zA-Z0-9=]", "");
 			String whereKey = whereClause.split("=")[0];
 			String whereValue = whereClause.split("=")[1];
 			Integer whereID = valueExists(whereValue, dataID);

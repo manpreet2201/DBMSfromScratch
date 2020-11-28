@@ -47,7 +47,7 @@ public class Authentication {
 	public static void main(String[] args) throws IOException {
 		Authentication testObject = new Authentication();
 		Scanner scannerObject = new Scanner(System.in);
-		System.out.println("operations available 1. registration 2. authentication ");
+		System.out.println("operations available 1. registration 2. authentication 3.DB Dump Creation");
 		System.out.println("Enter your choice ");
 		int choice = scannerObject.nextInt();
 		System.out.println("Enter the username");
@@ -60,6 +60,9 @@ public class Authentication {
 			break;
 		case 2:
 			testObject.authenticate(username, password);
+			break;
+		case 3:
+			dumpCreationObject.CreateDump("firstDb");
 			break;
 		default:
 			System.out.println("invalid choice");

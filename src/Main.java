@@ -1,30 +1,62 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Enter your query: ");
+		System.out.println("Enter your query:");
 		String sql = scanner.nextLine();
-		sql=sql.toUpperCase();
+		sql = sql.toUpperCase();
 
-		if (sql.contains("CREATE") && sql.contains("TABLE")) {
-			
-			Create c;
+		if (sql.contains("USE")) {
+			System.out.println("Database exists");
+			sql = sql.trim();
+			sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
+			String[] splited1 = sql.split("\\s+");
+			String databasename = splited1[1];
 			try {
-				c = new Create();
-				c.createTable(sql);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				JSONParser jsonParser = new JSONParser();
+				FileReader reader;
+				reader = new FileReader("/Users/manpreetsingh/Documents/dataproject5408/src/files/databases.json");
+				Object obj;
+				obj = jsonParser.parse(reader);
+
+				JSONArray databaseList1 = (JSONArray) obj;
+
+				databaseList1.forEach(db -> {
+					if (((JSONObject) db).get("dbname").equals(databasename)) {
+						System.out.println("Database exists");
+
+					}
+				});
+				System.out.println("Enter your query:");
+				String sql1 = scanner.nextLine();
+				sql1 = sql1.toUpperCase();
+				QueryProcessing q1 = new QueryProcessing();
+				q1.QProcess(sql1, databasename);
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			
-
-		} else if (sql.contains("INSERT")) {
-
+		} else {
+			QueryProcessing q1 = new QueryProcessing();
+			q1.QProcess(sql, null);
 		}
-		
+
 	}
 }

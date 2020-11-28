@@ -1,12 +1,3 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 public class QueryProcessing {
 	String databasename = null;
 	boolean exit = true;
@@ -32,6 +23,18 @@ public class QueryProcessing {
 
 		} else if (sql.contains("INSERT")) {
 
+		} else if (sql.contains("UPDATE") && sql.contains("SET") && sql.contains("WHERE")) {
+			Update update;
+			try {
+				update = new Update();
+				if (!update.tableExists(sql, databasename)) {
+					throw new Exception("Table Does Not Exist");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Incorrect Syntax - Please try again");
 		}
 
 	}

@@ -1,10 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,7 +25,7 @@ public class Main {
 			try {
 				JSONParser jsonParser = new JSONParser();
 				FileReader reader;
-				reader = new FileReader("/Users/manpreetsingh/Documents/dataproject5408/src/files/databases.json");
+				reader = new FileReader("src/files/databases.json");
 				Object obj;
 				obj = jsonParser.parse(reader);
 

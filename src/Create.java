@@ -1,3 +1,6 @@
+//import jdk.nashorn.internal.parser.JSONParser;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,10 +10,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-//import jdk.nashorn.internal.parser.JSONParser;
-
-import java.io.File;
 
 public class Create {
 
@@ -36,8 +35,7 @@ public class Create {
 		arrayElementOneArray.put(arrayElementOneArrayElementOne);
 		obj.put("columnlist", arrayElementOneArray);
 		try {
-			File file = new File(
-					"/Users/manpreetsingh/Documents/dataproject5408/src/files/" + databasename + "/" + table + ".json");
+			File file = new File("src/files/" + databasename + "/" + table + ".json");
 
 			file.createNewFile();
 			FileWriter writer = new FileWriter(file);

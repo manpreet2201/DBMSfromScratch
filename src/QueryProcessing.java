@@ -30,6 +30,7 @@ public class QueryProcessing {
 				if (!update.tableExists(sql, databasename)) {
 					throw new Exception("Table Does Not Exist");
 				}
+				update.updateTable(sql, databasename);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

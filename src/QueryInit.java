@@ -8,15 +8,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class Main {
+public class QueryInit {
 
-	public static void main(String[] args) {
+	public void init() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter your query:");
 		String sql = scanner.nextLine();
-		sql = sql.toUpperCase();
 
-		if (sql.contains("USE")) {
+		if (sql.toUpperCase().contains("USE")) {
 			System.out.println("Database exists");
 			sql = sql.trim();
 			sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
@@ -37,11 +36,18 @@ public class Main {
 
 					}
 				});
-				System.out.println("Enter your query:");
-				String sql1 = scanner.nextLine();
-				sql1 = sql1.toUpperCase();
-				QueryProcessing q1 = new QueryProcessing();
-				q1.QProcess(sql1, databasename);
+				while(true) {
+					System.out.println("Enter your query or enter 0 to exit:");
+					String sql1 = scanner.nextLine();
+					if (sql1.equals("0")) {
+						System.out.println("ended");
+						break;
+					} else {
+						
+					QueryProcessing q1 = new QueryProcessing();
+					q1.QProcess(sql1, databasename);
+					}
+				}
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

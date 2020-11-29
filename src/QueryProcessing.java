@@ -4,14 +4,14 @@ public class QueryProcessing {
 
 	public void QProcess(String sql, String databasename) {
 
-		if (sql.contains("CREATE") && sql.contains("DATABASE")) {
+		if (sql.toUpperCase().contains("CREATE") && sql.toUpperCase().contains("DATABASE")) {
 			Database d;
 			d = new Database();
 			d.createDatabase(sql);
 
 		}
 
-		else if (sql.contains("CREATE") && sql.contains("TABLE") && exit == true) {
+		else if (sql.toUpperCase().contains("CREATE") && sql.toUpperCase().contains("TABLE") && exit == true) {
 
 			Create c;
 			try {
@@ -21,9 +21,17 @@ public class QueryProcessing {
 				e.printStackTrace();
 			}
 
-		} else if (sql.contains("INSERT")) {
+		} else if (sql.toUpperCase().contains("INSERT")) {
+			
+			Insert c;
+			try {
+				c = new Insert();
+				c.insert(sql, databasename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-		} else if (sql.contains("UPDATE") && sql.contains("SET") && sql.contains("WHERE")) {
+		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET") && sql.toUpperCase().contains("WHERE")) {
 			Update update;
 			try {
 				update = new Update();

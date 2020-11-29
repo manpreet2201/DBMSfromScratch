@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Authentication {
-	String credentialsFile = "credentials.csv";
+	String credentialsFile = "/Users/manpreetsingh/Documents/dataproject5408/src/credentials.csv";
 	String credential = "";
 
 	public void register(String username, String password) throws IOException {
@@ -35,8 +35,10 @@ public class Authentication {
 		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader(credentialsFile));
 		while ((credential = bufferedReaderObject.readLine()) != null) {
 			String[] credentials = credential.split(",");
-			if (credentials[0] == username && credentials[1] == password) {
+			if (credentials[0].equals(username) && credentials[1].equals(password)) {
 				System.out.println("Authenticated");
+				QueryInit q1=new QueryInit();
+				q1.init();
 			} else {
 				System.out.println("Not Authenticated");
 			}
@@ -47,6 +49,7 @@ public class Authentication {
 	public static void main(String[] args) throws IOException {
 		Authentication testObject = new Authentication();
 		Scanner scannerObject = new Scanner(System.in);
+		DumpCreation dumpCreationObject=new DumpCreation();
 		System.out.println("operations available 1. registration 2. authentication 3.DB Dump Creation");
 		System.out.println("Enter your choice ");
 		int choice = scannerObject.nextInt();

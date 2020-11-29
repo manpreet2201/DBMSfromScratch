@@ -25,7 +25,9 @@ public class Create {
 			columns.put(splited[i], splited[i + 1]);
 		}
 		JSONObject obj = new JSONObject();
+		JSONArray datalistarray = new JSONArray();
 		obj.put("tablename", table);
+		obj.put("datalist", datalistarray);
 		JSONArray arrayElementOneArray = new JSONArray();
 		JSONObject arrayElementOneArrayElementOne = new JSONObject();
 		for (Map.Entry<String, String> entry : columns.entrySet()) {

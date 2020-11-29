@@ -14,9 +14,8 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter your query:");
 		String sql = scanner.nextLine();
-		sql = sql.toUpperCase();
 
-		if (sql.contains("USE")) {
+		if (sql.toUpperCase().contains("USE")) {
 			System.out.println("Database exists");
 			sql = sql.trim();
 			sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
@@ -39,7 +38,6 @@ public class Main {
 				});
 				System.out.println("Enter your query:");
 				String sql1 = scanner.nextLine();
-				sql1 = sql1.toUpperCase();
 				QueryProcessing q1 = new QueryProcessing();
 				q1.QProcess(sql1, databasename);
 

@@ -1,5 +1,3 @@
-//import jdk.nashorn.internal.parser.JSONParser;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,11 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class Update {
+public class Delete {
 
 	public Boolean tableExists(String sql, String dbName) {
 		String[] sqlArr = sql.split(" ");
-		String tablename = sqlArr[1];
+		String tablename = sqlArr[2];
 		File tableFile = new File("src/files/" + dbName + "/" + tablename + ".json");
 		if (tableFile.exists() && !tableFile.isDirectory()) {
 			return true;
@@ -42,25 +40,31 @@ public class Update {
 		return -1;
 	}
 
-	public void updateTable(String sql, String dbName) {
+	public void deleteQuery(String sql, String dbName) {
 		HashMap<Integer, HashMap<String, String>> dataID = new HashMap<Integer, HashMap<String, String>>();
-		String og_sql = sql;
-		sql = sql.trim();
-		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
-		String[] sqlArr = sql.split("\\s+");
-		String tablename = sqlArr[1];
-
+		String[] sqlArr = sql.split(" ");
+		String tablename = sqlArr[2];
 		File tableFile = new File("src/files/" + dbName + "/" + tablename + ".json");
-		try {
 
-			if (sqlArr[2].equals("SET") == false && !sql.contains("WHERE")) {
-				throw new Exception("Incorrect Syntax - SET and WHERE Clauses not found");
-			}
+		try {
 
 			InputStream tableStream = new FileInputStream(tableFile);
 			JSONTokener tokener = new JSONTokener(tableStream);
 			JSONObject object = new JSONObject(tokener);
 			JSONArray dataJSON = object.getJSONArray("datalist");
+
+			// Delete All Rows
+			if (sqlArr.length == 3 && !sql.contains("WHERE")) {
+				System.out.println("Deleting all records from: " + tablename + " " + dataJSON.length());
+				int length = dataJSON.length();
+				for (int i = 0; i < length; i++) {
+					dataJSON.remove(0);
+				}
+				System.out.println("After Deletion: " + dataJSON + " " + object);
+				FileWriter updateFile = new FileWriter(tableFile);
+				updateFile.write(object.toString());
+				updateFile.close();
+			}
 
 			for (int i = 0; i < dataJSON.length(); i++) {
 				HashMap<String, String> dataValues = new HashMap<String, String>();
@@ -71,20 +75,20 @@ public class Update {
 					String key = keys.next();
 					dataValues.put(key, jsonObject.get(key).toString());
 				}
-
 				dataID.put(i, dataValues);
 			}
 
-			System.out.println(dataID);
-
-			// SET Clause
-			String setClause = og_sql.substring(og_sql.indexOf("SET"), og_sql.indexOf("WHERE"));
-			setClause = setClause.replace("SET ", "");
-			setClause = setClause.replaceAll("[^a-zA-Z0-9=,]", "");
-			String[] setParams = setClause.split(",");
+			// FROM Clause
+			String fromClause = sql.substring(sql.indexOf("FROM"), sql.indexOf("WHERE"));
+			fromClause = fromClause.replace("FROM ", "");
+			fromClause = fromClause.replaceAll("[^a-zA-Z0-9=,]", "");
+			String[] fromParams = fromClause.split(",");
+			if (fromParams.length > 1) {
+				throw new Exception("Invalid FROM Clause");
+			}
 
 			// WHERE Clause
-			String whereClause = og_sql.substring(og_sql.indexOf("WHERE"), og_sql.length());
+			String whereClause = sql.substring(sql.indexOf("WHERE"), sql.length());
 			whereClause = whereClause.replace("WHERE", "").trim();
 			whereClause = whereClause.replaceAll("[^a-zA-Z0-9=]", "");
 			String whereKey = whereClause.split("=")[0];
@@ -97,44 +101,21 @@ public class Update {
 			for (int j = 0; j < dataJSON.length(); j++) {
 				JSONObject jsonObject = dataJSON.getJSONObject(j);
 				Iterator<String> keys = jsonObject.keys();
-
 				while (keys.hasNext()) {
 					String key = keys.next();
 					if (key.equals(whereKey) && jsonObject.getString(key).equals(whereValue)) {
-						System.out.println(jsonObject.getString(key));
-						for (int i = 0; i < setParams.length; i++) {
-							setParams[i] = setParams[i].trim();
-							System.out.println(setParams[i]);
-							String setkey = setParams[i].split("=")[0];
-							String newValue = setParams[i].split("=")[1];
-							if (!keyExists(setkey, dataID)) {
-								throw new Exception("Key Does Not Exist - Please check your syntax");
-							}
-							jsonObject.put(setkey, newValue);
-						}
+						dataJSON.remove(j);
+						j = 0; // Resetting the loop parameter so that the last JSON object is not skipped.
 					}
 
 				}
 
 			}
-			System.out.println("AFTER: " + dataJSON);
 			FileWriter updateFile = new FileWriter(tableFile);
 			updateFile.write(object.toString());
 			updateFile.close();
-
-//			Updating the DATA Strucuture
-//			for (int i = 0; i < setParams.length; i++) {
-//				setParams[i] = setParams[i].trim();
-//				System.out.println(setParams[i]);
-//				String key = setParams[i].split("=")[0];
-//				String newValue = setParams[i].split("=")[1];
-//				if (!keyExists(key, dataID)) {
-//					throw new Exception("Key Does Not Exist - Please check your syntax");
-//				}
-//				dataID.get(whereID).replace(key, newValue);
-//			}
-//			System.out.println("------------");
-//			System.out.println(dataID.toString());
+			System.out.println("Records Deleted Successfully");
+			System.out.println("Remaining Records: " + dataJSON);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to read file");
@@ -143,5 +124,6 @@ public class Update {
 			System.out.println("Incorrect Syntax - Please try again");
 			e.printStackTrace();
 		}
+
 	}
 }

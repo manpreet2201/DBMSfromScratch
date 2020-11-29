@@ -3,6 +3,7 @@ public class QueryProcessing {
 	boolean exit = true;
 
 	public void QProcess(String sql, String databasename) {
+		String[] keywords = sql.trim().split(" ");
 
 		if (sql.toUpperCase().contains("CREATE") && sql.toUpperCase().contains("DATABASE")) {
 			Database d;
@@ -22,7 +23,7 @@ public class QueryProcessing {
 			}
 
 		} else if (sql.toUpperCase().contains("INSERT")) {
-			
+
 			Insert c;
 			try {
 				c = new Insert();
@@ -31,7 +32,8 @@ public class QueryProcessing {
 				e.printStackTrace();
 			}
 
-		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET") && sql.toUpperCase().contains("WHERE")) {
+		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET")
+				&& sql.toUpperCase().contains("WHERE")) {
 			Update update;
 			try {
 				update = new Update();
@@ -53,6 +55,14 @@ public class QueryProcessing {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (sql.toUpperCase().contains("SHOW") && sql.toUpperCase().contains("TABLES") && keywords.length == 2) {
+			Database database = new Database();
+			database.showTables(databasename);
+		} else if (sql.toUpperCase().contains("DROP") && sql.toUpperCase().contains("DATABASE")
+				&& keywords.length == 3) {
+			Database database = new Database();
+			String dbName = keywords[2].replace(";", "");
+			System.out.println(database.dropSchema(dbName));
 		} else {
 			System.out.println("Incorrect Syntax - Please try again");
 		}

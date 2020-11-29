@@ -44,7 +44,7 @@ public class Update {
 
 	public void updateTable(String sql, String dbName) {
 		HashMap<Integer, HashMap<String, String>> dataID = new HashMap<Integer, HashMap<String, String>>();
-		String og_sql = sql;
+		String og_sql = sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] sqlArr = sql.split("\\s+");
@@ -80,7 +80,6 @@ public class Update {
 			// SET Clause
 			String setClause = og_sql.substring(og_sql.indexOf("SET"), og_sql.indexOf("WHERE"));
 			setClause = setClause.replace("SET ", "");
-			setClause = setClause.replaceAll("[^a-zA-Z0-9=,]", "");
 			String[] setParams = setClause.split(",");
 
 			// WHERE Clause
@@ -101,12 +100,11 @@ public class Update {
 				while (keys.hasNext()) {
 					String key = keys.next();
 					if (key.equals(whereKey) && jsonObject.getString(key).equals(whereValue)) {
-						System.out.println(jsonObject.getString(key));
 						for (int i = 0; i < setParams.length; i++) {
 							setParams[i] = setParams[i].trim();
-							System.out.println(setParams[i]);
 							String setkey = setParams[i].split("=")[0];
 							String newValue = setParams[i].split("=")[1];
+							newValue = newValue.replaceAll("[\'\"]", "");
 							if (!keyExists(setkey, dataID)) {
 								throw new Exception("Key Does Not Exist - Please check your syntax");
 							}
@@ -117,11 +115,10 @@ public class Update {
 				}
 
 			}
-			System.out.println("AFTER: " + dataJSON);
 			FileWriter updateFile = new FileWriter(tableFile);
 			updateFile.write(object.toString());
 			updateFile.close();
-
+			System.out.println("Records Updated!");
 //			Updating the DATA Strucuture
 //			for (int i = 0; i < setParams.length; i++) {
 //				setParams[i] = setParams[i].trim();

@@ -12,11 +12,10 @@ public class QueryInit {
 
 	public void init() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter your query:");
+		System.out.println("Choose a schema OR Drop a schema: ");
 		String sql = scanner.nextLine();
 
 		if (sql.toUpperCase().contains("USE")) {
-			System.out.println("Database exists");
 			sql = sql.trim();
 			sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 			String[] splited1 = sql.split("\\s+");
@@ -36,16 +35,16 @@ public class QueryInit {
 
 					}
 				});
-				while(true) {
+				while (true) {
 					System.out.println("Enter your query or enter 0 to exit:");
 					String sql1 = scanner.nextLine();
 					if (sql1.equals("0")) {
 						System.out.println("ended");
 						break;
 					} else {
-						
-					QueryProcessing q1 = new QueryProcessing();
-					q1.QProcess(sql1, databasename);
+
+						QueryProcessing q1 = new QueryProcessing();
+						q1.QProcess(sql1, databasename);
 					}
 				}
 

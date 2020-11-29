@@ -13,6 +13,7 @@ public class Database {
 	boolean exit = true;
 
 	public void createDatabase(String sql) {
+		sql=sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] splited = sql.split("\\s+");

@@ -22,7 +22,7 @@ public class QueryProcessing {
 			}
 
 		} else if (sql.toUpperCase().contains("INSERT")) {
-			
+
 			Insert c;
 			try {
 				c = new Insert();
@@ -31,7 +31,19 @@ public class QueryProcessing {
 				e.printStackTrace();
 			}
 
-		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET") && sql.toUpperCase().contains("WHERE")) {
+		} else if (sql.toUpperCase().contains("SELECT")) {
+
+			System.out.println("select");
+			Select s;
+			try {
+				s= new Select();
+				s.select(sql, databasename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET")
+				&& sql.toUpperCase().contains("WHERE")) {
 			Update update;
 			try {
 				update = new Update();

@@ -3,9 +3,11 @@
 /Authentication.py
 /Create.class
 /Database.class
+/Drop.class
 /Insert.class
 /QueryInit.class
 /QueryProcessing.class
+/Select.class
 /Update.class
 /credentials.csv
 /files/

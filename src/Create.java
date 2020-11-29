@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public class Create {
 
 	public void createTable(String sql, String databasename) throws JSONException {
+sql=sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] splited = sql.split("\\s+");
@@ -21,7 +22,7 @@ public class Create {
 		tablename.add(splited[2]);
 		String table = splited[2];
 		Map<String, String> columns = new HashMap<String, String>();
-		for (int i = 3; i < splited.length - 2; i = i + 2) {
+		for (int i = 3; i < splited.length - 1; i = i + 2) {
 			columns.put(splited[i], splited[i + 1]);
 		}
 		JSONObject obj = new JSONObject();

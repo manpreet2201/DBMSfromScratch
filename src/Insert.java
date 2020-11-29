@@ -16,13 +16,13 @@ public class Insert {
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] splited = sql.split("\\s+");
-		String tablename = splited[2];
+		String tablename = splited[2].toUpperCase();
 
 		ArrayList<String> columnName = new ArrayList<String>();
 		ArrayList<String> columnValues = new ArrayList<String>();
 		int i = 3;
 		while (!splited[i].equalsIgnoreCase("VALUES")) {
-			columnName.add(splited[i]);
+			columnName.add(splited[i].toUpperCase());
 			i++;
 		}
 		i++;

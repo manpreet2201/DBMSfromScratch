@@ -32,6 +32,17 @@ public class QueryProcessing {
 				e.printStackTrace();
 			}
 
+		} else if (sql.toUpperCase().contains("SELECT")) {
+
+			System.out.println("select");
+			Select s;
+			try {
+				s = new Select();
+				s.select(sql, databasename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else if (sql.toUpperCase().contains("UPDATE") && sql.toUpperCase().contains("SET")
 				&& sql.toUpperCase().contains("WHERE")) {
 			Update update;

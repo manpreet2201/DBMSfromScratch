@@ -33,8 +33,6 @@ public class QueryProcessing {
 			}
 
 		} else if (sql.toUpperCase().contains("SELECT")) {
-
-			System.out.println("select");
 			Select s;
 			try {
 				s = new Select();

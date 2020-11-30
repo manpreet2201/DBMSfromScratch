@@ -57,8 +57,8 @@ public class Authentication {
 		Authentication testObject = new Authentication();
 		DumpCreation dumpCreationObject = new DumpCreation();
 		Scanner scannerObject = new Scanner(System.in);
-		System.out
-				.println("operations available 1. registration 2. authentication 3.DB Dump Creation 4. ERD Generation");
+		System.out.println(
+				"Operations Available: 1. registration 2. authentication 3.DB Dump Creation 4. ERD Generation");
 		System.out.println("Enter your choice ");
 		int choice = scannerObject.nextInt();
 		System.out.println("Enter the username");

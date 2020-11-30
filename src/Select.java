@@ -15,7 +15,7 @@ public class Select {
 	public void select(String sql, String databasename) {
 		sql = sql.toUpperCase();
 		sql = sql.trim();
-		sql = sql.replaceAll("[^a-zA-Z0-9*]", " ");
+		sql = sql.replaceAll("[^a-zA-Z0-9*=!=><]", " ");
 		String[] splited = sql.split("\\s+");
 		int i = 0;
 		while (!splited[i].equalsIgnoreCase("from")) {
@@ -23,7 +23,67 @@ public class Select {
 		}
 		String tablename = splited[i + 1];
 
-		if (sql.contains("*")) {
+		if (sql.contains("*") && sql.contains("WHERE")) {
+			int i3 = 0;
+			while (!splited[i3].equalsIgnoreCase("where")) {
+				i3++;
+			}
+			String conditionColumn = splited[i3 + 1];
+			String operator = splited[i3 + 2];
+			String conditionValue = splited[i3 + 3];
+			JSONParser jsonParser = new JSONParser();
+			try {
+				FileReader reader = new FileReader("src/files/" + databasename + "/" + tablename + ".json");
+				Object obj = jsonParser.parse(reader);
+				JSONArray columnlist = (JSONArray) ((JSONObject) obj).get("columnlist");
+
+				JSONObject columns = (JSONObject) columnlist.get(0);
+				Set<String> keys = columns.keySet();
+				Iterator<String> it1 = keys.iterator();
+				while (it1.hasNext()) {
+					System.out.print(it1.next() + " | ");
+
+				}
+				System.out.println();
+
+				JSONArray datalist = (JSONArray) ((JSONObject) obj).get("datalist");
+
+				datalist.forEach(row -> {
+					if (operator.equals("=")) {
+						if ((((JSONObject) row).get(conditionColumn)).equals(conditionValue)) {
+							Iterator<String> it = keys.iterator();
+							while (it.hasNext()) {
+
+								System.out.print(((JSONObject) row).get(it.next()) + " | ");
+
+							}
+						}
+					}
+					if (operator.equals("!=")) {
+						if (!(((JSONObject) row).get(conditionColumn)).equals(conditionValue)) {
+							Iterator<String> it = keys.iterator();
+							while (it.hasNext()) {
+
+								System.out.print(((JSONObject) row).get(it.next()) + " | ");
+
+							}
+							System.out.println();
+						}
+					}
+				});
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			System.out.println();
+
+//			SELECT * FROM Customers
+//			WHERE Country='Mexico';
+		} else if (sql.contains("*")) {
 			JSONParser jsonParser = new JSONParser();
 			try {
 				FileReader reader = new FileReader("src/files/" + databasename + "/" + tablename + ".json");
@@ -82,7 +142,7 @@ public class Select {
 				datalist.forEach(row -> {
 					for (int i2 = 0; i2 < columnnames.size(); i2++) {
 						System.out.print(((JSONObject) row).get(columnnames.get(i2)));
-						System.out.print(" | ");
+						System.out.println(" | ");
 					}
 				});
 				System.out.println();
@@ -97,5 +157,4 @@ public class Select {
 		}
 
 	}
-
 }

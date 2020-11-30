@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class Create {
 
 	public void createTable(String sql, String databasename) throws JSONException {
-sql=sql.toUpperCase();
+		sql = sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] splited = sql.split("\\s+");

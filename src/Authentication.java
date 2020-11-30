@@ -73,7 +73,7 @@ public class Authentication {
 			testObject.authenticate(username, password);
 			break;
 		case 3:
-			dumpCreationObject.CreateDump("firstDb");
+			dumpCreationObject.CreateDump("src/files/JAY");
 			break;
 		case 4:
 			Process p = Runtime.getRuntime().exec("python3 ERDExample.py");

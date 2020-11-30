@@ -74,6 +74,17 @@ public class QueryProcessing {
 			Database database = new Database();
 			String dbName = keywords[2].replace(";", "");
 			System.out.println(database.dropSchema(dbName));
+		} else if (sql.toUpperCase().contains("DROP") && sql.toUpperCase().contains("TABLE") && keywords.length == 3) {
+			Delete delete;
+			try {
+				delete = new Delete();
+				if (!delete.tableExists(sql, databasename)) {
+					throw new Exception("Table Does Not Exist");
+				}
+				delete.dropTable(sql, databasename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			System.out.println("Incorrect Syntax - Please try again");
 		}

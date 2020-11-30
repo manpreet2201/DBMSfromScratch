@@ -15,11 +15,27 @@ public class Delete {
 	public Boolean tableExists(String sql, String dbName) {
 		String[] sqlArr = sql.split(" ");
 		String tablename = sqlArr[2];
+		tablename = tablename.replace(";", "");
 		File tableFile = new File("src/files/" + dbName + "/" + tablename + ".json");
 		if (tableFile.exists() && !tableFile.isDirectory()) {
 			return true;
 		}
 		return false;
+	}
+
+	public void dropTable(String sql, String dbName) {
+		sql = sql.toUpperCase();
+		String[] sqlArr = sql.split(" ");
+		String tablename = sqlArr[2];
+		String fileName = tablename.replace(";", "") + ".json";
+		File folder = new File("src/files/" + dbName);
+		File[] listOfFiles = folder.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].getName().equals(fileName)) {
+				listOfFiles[i].delete();
+			}
+		}
+		System.out.println("Table " + tablename.replace(";", "") + " Deleted!");
 	}
 
 	public Boolean keyExists(String key, HashMap<Integer, HashMap<String, String>> database) {
@@ -42,6 +58,7 @@ public class Delete {
 
 	public void deleteQuery(String sql, String dbName) {
 		HashMap<Integer, HashMap<String, String>> dataID = new HashMap<Integer, HashMap<String, String>>();
+		sql = sql.toUpperCase();
 		String[] sqlArr = sql.split(" ");
 		String tablename = sqlArr[2];
 		File tableFile = new File("src/files/" + dbName + "/" + tablename + ".json");
@@ -54,7 +71,7 @@ public class Delete {
 			JSONArray dataJSON = object.getJSONArray("datalist");
 
 			// Delete All Rows
-			if (sqlArr.length == 3 && !sql.contains("WHERE")) {
+			if ((sqlArr.length == 3 && !sql.contains("WHERE")) || (sql.contains("TRUNCATE"))) {
 				System.out.println("Deleting all records from: " + tablename + " " + dataJSON.length());
 				int length = dataJSON.length();
 				for (int i = 0; i < length; i++) {
@@ -64,6 +81,7 @@ public class Delete {
 				FileWriter updateFile = new FileWriter(tableFile);
 				updateFile.write(object.toString());
 				updateFile.close();
+				throw new ExitMethodException("Table Truncated");
 			}
 
 			for (int i = 0; i < dataJSON.length(); i++) {
@@ -120,10 +138,19 @@ public class Delete {
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to read file");
 			e.printStackTrace();
+		} catch (ExitMethodException e) {
+			System.out.println("Table Truncated");
 		} catch (Exception e) {
 			System.out.println("Incorrect Syntax - Please try again");
 			e.printStackTrace();
 		}
 
+	}
+}
+
+@SuppressWarnings("serial")
+class ExitMethodException extends Exception {
+	public ExitMethodException(String errorMessage) {
+		super(errorMessage);
 	}
 }

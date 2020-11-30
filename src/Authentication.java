@@ -73,6 +73,8 @@ public class Authentication {
 			testObject.authenticate(username, password);
 			break;
 		case 3:
+			System.out.println("Enter the database Name");
+			String DatabaseName = scannerObject.next();
 			dumpCreationObject.CreateDump("src/files/JAY");
 			break;
 		case 4:

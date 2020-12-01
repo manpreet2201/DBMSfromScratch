@@ -100,9 +100,10 @@ public class Create {
 	}
 
 	public void createTable(String sql, String databasename) throws JSONException {
-		GeneralLogger log1=new GeneralLogger();
-		EventLogger log2=new EventLogger();
+		GeneralLogger log1 = new GeneralLogger();
+		EventLogger log2 = new EventLogger();
 		log1.log("Create", databasename);
+		boolean exit = true;
 		sql = sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
@@ -114,29 +115,48 @@ public class Create {
 		for (int i = 3; i < splited.length - 1; i = i + 2) {
 			columns.put(splited[i], splited[i + 1]);
 		}
-		JSONObject obj = new JSONObject();
-		JSONArray datalistarray = new JSONArray();
-		obj.put("tablename", table);
-		obj.put("datalist", datalistarray);
-		JSONArray arrayElementOneArray = new JSONArray();
-		JSONObject arrayElementOneArrayElementOne = new JSONObject();
-		for (Map.Entry<String, String> entry : columns.entrySet()) {
-			arrayElementOneArrayElementOne.put(entry.getKey(), entry.getValue());
+		java.util.List<String> results = new ArrayList<String>();
 
+		File[] files = new File("/Users/manpreetsingh/Documents/dataproject5408/src/files/" + databasename).listFiles();
+		// If this pathname does not denote a directory, then listFiles() returns null.
+
+		for (File file : files) {
+			if (file.isFile()) {
+				results.add(file.getName());
+			}
 		}
-		arrayElementOneArray.put(arrayElementOneArrayElementOne);
-		obj.put("columnlist", arrayElementOneArray);
-		try {
-			File file = new File("src/files/" + databasename + "/" + table + ".json");
 
-			file.createNewFile();
-			FileWriter writer = new FileWriter(file);
-			writer.write(obj.toString());
-			writer.close();
-			log2.log(sql, databasename,table);
-		} catch (IOException e) {
-			log2.error(sql, databasename,table);
-			e.printStackTrace();
+		for (int i = 0; i < results.size(); i++) {
+			if (results.get(i).equals(table + ".json")) {
+				System.out.println("Table already exists in this database");
+				exit = false;
+			}
+		}
+		if (exit) {
+			JSONObject obj = new JSONObject();
+			JSONArray datalistarray = new JSONArray();
+			obj.put("tablename", table);
+			obj.put("datalist", datalistarray);
+			JSONArray arrayElementOneArray = new JSONArray();
+			JSONObject arrayElementOneArrayElementOne = new JSONObject();
+			for (Map.Entry<String, String> entry : columns.entrySet()) {
+				arrayElementOneArrayElementOne.put(entry.getKey(), entry.getValue());
+
+			}
+			arrayElementOneArray.put(arrayElementOneArrayElementOne);
+			obj.put("columnlist", arrayElementOneArray);
+			try {
+				File file = new File("src/files/" + databasename + "/" + table + ".json");
+
+				file.createNewFile();
+				FileWriter writer = new FileWriter(file);
+				writer.write(obj.toString());
+				writer.close();
+				log2.log(sql, databasename, table);
+			} catch (IOException e) {
+				log2.error(sql, databasename, table);
+				e.printStackTrace();
+			}
 		}
 	}
 }

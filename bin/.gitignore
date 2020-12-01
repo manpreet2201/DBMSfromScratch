@@ -1,4 +1,3 @@
-/.DS_Store
 /Authentication.class
 /Authentication.py
 /Create.class
@@ -6,6 +5,7 @@
 /Delete.class
 /DumpCreation.class
 /EMP.json
+/ERDGeneration.py
 /ExitMethodException.class
 /Insert.class
 /QueryInit.class

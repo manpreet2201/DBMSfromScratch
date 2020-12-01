@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-01T03:27:15.713536Z</date>
+  <millis>1606793235713</millis>
+  <nanos>536000</nanos>
+  <sequence>0</sequence>
+  <logger>logging.EventLogger</logger>
+  <level>INFO</level>
+  <class>logging.EventLogger</class>
+  <method>authlog</method>
+  <thread>1</thread>
+  <message>user authenticated: ram</message>
+</record>
+<record>
+  <date>2020-12-01T03:28:11.978041Z</date>
+  <millis>1606793291978</millis>
+  <nanos>41000</nanos>
+  <sequence>2</sequence>
+  <logger>logging.EventLogger</logger>
+  <level>INFO</level>
+  <class>logging.EventLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>query: SELECT * FROM PERSONS, databasename: JAY, tablename: PERSONS, query successful </message>
+</record>

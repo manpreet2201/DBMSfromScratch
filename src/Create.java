@@ -11,9 +11,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Create {
 
 	public void createTable(String sql, String databasename) throws JSONException {
+		GeneralLogger log1=new GeneralLogger();
+		EventLogger log2=new EventLogger();
+		log1.log("Create", databasename);
 		sql = sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
@@ -44,8 +50,9 @@ public class Create {
 			FileWriter writer = new FileWriter(file);
 			writer.write(obj.toString());
 			writer.close();
+			log2.log(sql, databasename,table);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log2.error(sql, databasename,table);
 			e.printStackTrace();
 		}
 	}

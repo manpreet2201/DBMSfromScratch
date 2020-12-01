@@ -10,9 +10,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Insert {
 
 	public void insert(String sql, String databasename) {
+		GeneralLogger log1=new GeneralLogger();
+		EventLogger log2=new EventLogger();
+		log1.log("Insert", databasename);
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9]", " ");
 		String[] splited = sql.split("\\s+");
@@ -31,9 +37,6 @@ public class Insert {
 			columnValues.add(splited[i]);
 			i++;
 		}
-		System.out.println(columnName.size());
-
-		System.out.println(columnValues.size());
 		JSONParser jsonParser = new JSONParser();
 		try {
 			FileReader reader = new FileReader("src/files/" + databasename + "/" + tablename + ".json");
@@ -43,7 +46,6 @@ public class Insert {
 
 			for (int i2 = 0; i2 < columnValues.size();) {
 				JSONObject row = new JSONObject();
-				System.out.println("fddd");
 				for (int i1 = 0; i1 < columnName.size(); i1++) {
 					row.put(columnName.get(i1), columnValues.get(i2));
 					i2++;
@@ -55,12 +57,16 @@ public class Insert {
 			FileWriter file = new FileWriter("src/files/" + databasename + "/" + tablename + ".json");
 			file.write(obj.toString());
 			file.flush();
+			log2.log(sql, databasename,tablename);
 
 		} catch (FileNotFoundException e) {
+			log2.error(sql, databasename,tablename);
 			e.printStackTrace();
 		} catch (IOException e) {
+			log2.error(sql, databasename,tablename);
 			e.printStackTrace();
 		} catch (ParseException e) {
+			log2.error(sql, databasename,tablename);
 			e.printStackTrace();
 		}
 

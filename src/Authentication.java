@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Authentication {
 	String credentialsFile = "credentials.csv";
 	String credential = "";
@@ -35,6 +38,7 @@ public class Authentication {
 	}
 
 	public void authenticate(String username, String password) throws IOException {
+		EventLogger log2=new EventLogger();
 		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader("src/" + credentialsFile));
 		while ((credential = bufferedReaderObject.readLine()) != null) {
 			String[] credentials = credential.split(",");
@@ -43,10 +47,12 @@ public class Authentication {
 					if (credentials[0].toLowerCase().equals(username.toLowerCase())
 							&& credentials[1].equals(password)) {
 						System.out.println("Authenticated");
+						log2.authlog(username);
 						QueryInit qInit = new QueryInit();
 						qInit.init();
 					} else {
 						System.out.println("Not Authenticated");
+						log2.errorauthlog(username);
 					}
 				}
 			}
@@ -57,8 +63,8 @@ public class Authentication {
 		Authentication testObject = new Authentication();
 		DumpCreation dumpCreationObject = new DumpCreation();
 		Scanner scannerObject = new Scanner(System.in);
-		System.out
-				.println("operations available 1. registration 2. authentication 3.DB Dump Creation 4. ERD Generation");
+		System.out.println(
+				"Operations Available: 1. Registration 2. Authentication 3. DB Dump Creation 4. ERD Generation");
 		System.out.println("Enter your choice ");
 		int choice = scannerObject.nextInt();
 		System.out.println("Enter the username");
@@ -73,11 +79,15 @@ public class Authentication {
 			testObject.authenticate(username, password);
 			break;
 		case 3:
+			System.out.println("Enter the database Name");
+			String DatabaseName = scannerObject.next();
 			dumpCreationObject.CreateDump("src/files/JAY");
 			break;
 		case 4:
-			Process p = Runtime.getRuntime().exec("python3 ERDExample.py");
-			System.out.println("Database file generated");
+			System.out.println("Enter the database Name");
+			String DatabaseForERD = scannerObject.next();
+			Process p = Runtime.getRuntime().exec("python3 ERDGeneration.py "+DatabaseForERD);
+			System.out.println("Database ERD generated");
 			break;
 		default:
 			System.out.println("invalid choice");

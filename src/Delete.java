@@ -10,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Delete {
 
 	public Boolean tableExists(String sql, String dbName) {
@@ -57,6 +60,9 @@ public class Delete {
 	}
 
 	public void deleteQuery(String sql, String dbName) {
+		GeneralLogger log1=new GeneralLogger();
+		EventLogger log2=new EventLogger();
+		log1.log("Delete", dbName);
 		HashMap<Integer, HashMap<String, String>> dataID = new HashMap<Integer, HashMap<String, String>>();
 		sql = sql.toUpperCase();
 		String[] sqlArr = sql.split(" ");
@@ -81,6 +87,7 @@ public class Delete {
 				FileWriter updateFile = new FileWriter(tableFile);
 				updateFile.write(object.toString());
 				updateFile.close();
+				log2.log(sql, dbName,tablename);
 				throw new ExitMethodException("Table Truncated");
 			}
 
@@ -132,15 +139,19 @@ public class Delete {
 			FileWriter updateFile = new FileWriter(tableFile);
 			updateFile.write(object.toString());
 			updateFile.close();
+			log2.log(sql, dbName,tablename);
 			System.out.println("Records Deleted Successfully");
 			System.out.println("Remaining Records: " + dataJSON);
 
 		} catch (FileNotFoundException e) {
+			log2.error(sql, dbName,tablename);
 			System.out.println("Unable to read file");
 			e.printStackTrace();
 		} catch (ExitMethodException e) {
+			
 			System.out.println("Table Truncated");
 		} catch (Exception e) {
+			log2.error(sql, dbName,tablename);
 			System.out.println("Incorrect Syntax - Please try again");
 			e.printStackTrace();
 		}

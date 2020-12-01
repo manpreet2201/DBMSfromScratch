@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Update {
 
 	public Boolean tableExists(String sql, String dbName) {
@@ -43,6 +46,9 @@ public class Update {
 	}
 
 	public void updateTable(String sql, String dbName) {
+		GeneralLogger log1=new GeneralLogger();
+		EventLogger log2=new EventLogger();
+		log1.log("Update", dbName);
 		HashMap<Integer, HashMap<String, String>> dataID = new HashMap<Integer, HashMap<String, String>>();
 		String og_sql = sql.toUpperCase();
 		sql = sql.trim();
@@ -118,6 +124,7 @@ public class Update {
 			FileWriter updateFile = new FileWriter(tableFile);
 			updateFile.write(object.toString());
 			updateFile.close();
+			log2.log(sql, dbName,tablename);
 			System.out.println("Records Updated!");
 //			Updating the DATA Strucuture
 //			for (int i = 0; i < setParams.length; i++) {

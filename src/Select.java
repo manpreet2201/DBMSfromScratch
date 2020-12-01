@@ -10,9 +10,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import logging.EventLogger;
+import logging.GeneralLogger;
+
 public class Select {
 
 	public void select(String sql, String databasename) {
+		GeneralLogger log1=new GeneralLogger();
+		EventLogger log2=new EventLogger();
+		log1.log("Select", databasename);
 		sql = sql.toUpperCase();
 		sql = sql.trim();
 		sql = sql.replaceAll("[^a-zA-Z0-9*=!=><]", " ");
@@ -71,12 +77,16 @@ public class Select {
 						}
 					}
 				});
+				log2.log(sql, databasename,tablename);
 
 			} catch (FileNotFoundException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			} catch (IOException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			} catch (ParseException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			}
 			System.out.println();
@@ -110,6 +120,7 @@ public class Select {
 					}
 					System.out.println();
 				});
+				log2.log(sql, databasename,tablename);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -146,12 +157,16 @@ public class Select {
 					}
 				});
 				System.out.println();
+				log2.log(sql, databasename,tablename);
 
 			} catch (FileNotFoundException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			} catch (IOException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			} catch (ParseException e) {
+				log2.error(sql, databasename,tablename);
 				e.printStackTrace();
 			}
 		}

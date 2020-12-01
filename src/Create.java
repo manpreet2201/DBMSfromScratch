@@ -31,7 +31,6 @@ public class Create {
 		// Primary Key
 		String primaryKey = sql.substring(sql.indexOf("PRIMARY KEY"), sql.indexOf(")")).replace("PRIMARY KEY", "");
 		primaryKey = primaryKey.replace("(", "").trim();
-		System.out.println(primaryKey);
 
 		// Foreign Keys
 		String[] fkKeys = null;
@@ -63,7 +62,6 @@ public class Create {
 
 		Map<String, String> columns = new HashMap<String, String>();
 		for (int i = 3; i < splited.length - 1; i = i + 2) {
-			System.out.println(splited[i] + " -- " + splited[i + 1]);
 			columns.put(splited[i], splited[i + 1]);
 		}
 		JSONObject obj = new JSONObject();
@@ -75,7 +73,6 @@ public class Create {
 		JSONObject arrayElementOneArrayElementOne = new JSONObject();
 		for (Map.Entry<String, String> entry : columns.entrySet()) {
 			if (entry.getKey().equalsIgnoreCase(primaryKey)) {
-				System.out.println("HERE");
 				arrayElementOneArrayElementOne.put("*" + entry.getKey(), entry.getValue());
 			}
 			arrayElementOneArrayElementOne.put(entry.getKey(), entry.getValue());
@@ -85,14 +82,11 @@ public class Create {
 		obj.put("columnlist", arrayElementOneArray);
 		relArray.put(relationsList);
 		obj.put("relations", relArray);
-		System.out.println(relArray);
-		System.out.println(arrayElementOneArray);
 		try {
 			File fileKey = new File("src/files/" + databasename + "/" + tableName + ".json");
 
 			fileKey.createNewFile();
 			FileWriter writerkeys = new FileWriter(fileKey);
-			System.out.println(obj.toString());
 			writerkeys.write(obj.toString());
 			writerkeys.close();
 		} catch (IOException e) {

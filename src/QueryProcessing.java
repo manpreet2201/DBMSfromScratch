@@ -92,6 +92,10 @@ public class QueryProcessing {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (sql.toUpperCase().contains("TRUNCATE") && sql.toUpperCase().contains("TABLE")
+				&& keywords.length == 3) {
+			Delete delete = new Delete();
+			delete.deleteQuery(sql, databasename);
 		} else {
 			System.out.println("Incorrect Syntax - Please try again");
 		}

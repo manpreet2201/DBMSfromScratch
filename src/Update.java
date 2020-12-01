@@ -35,8 +35,10 @@ public class Update {
 
 	public Integer valueExists(String value, HashMap<Integer, HashMap<String, String>> database) {
 		for (int i = 0; i < database.size(); i++) {
-			if (database.get(i).containsValue(value)) {
-				return i;
+			for (HashMap.Entry<String, String> entry : database.get(i).entrySet()) {
+				if (entry.getValue().equalsIgnoreCase(value)) {
+					return i;
+				}
 			}
 		}
 		return -1;
@@ -76,6 +78,8 @@ public class Update {
 			}
 
 			System.out.println(dataID);
+			Boolean isOr = false;
+			Boolean isAnd = false;
 
 			// SET Clause
 			String setClause = og_sql.substring(og_sql.indexOf("SET"), og_sql.indexOf("WHERE"));
@@ -84,37 +88,105 @@ public class Update {
 
 			// WHERE Clause
 			String whereClause = og_sql.substring(og_sql.indexOf("WHERE"), og_sql.length());
+			HashMap<String, String> whereHashMap = new HashMap<String, String>();
 			whereClause = whereClause.replace("WHERE", "").trim();
 			whereClause = whereClause.replaceAll("[^a-zA-Z0-9=]", "");
-			String whereKey = whereClause.split("=")[0];
-			String whereValue = whereClause.split("=")[1];
-			Integer whereID = valueExists(whereValue, dataID);
-			if (!keyExists(whereKey, dataID) && (whereID != -1)) {
-				throw new Exception("Invalid WHERE Condition - Please try again");
+			String[] whereConditions = null;
+			if (whereClause.contains("AND")) {
+				whereConditions = whereClause.split("AND");
+				isAnd = true;
+			} else if (whereClause.contains("OR")) {
+				whereConditions = whereClause.split("OR");
+				isOr = true;
 			}
+			if (whereConditions == null) {
+				String whereKey = whereClause.split("=")[0];
+				String whereValue = whereClause.split("=")[1];
+				Integer whereID = valueExists(whereValue, dataID);
+				if (!keyExists(whereKey, dataID) || (whereID == -1)) {
+					throw new Exception("Invalid WHERE Condition - Please try again");
+				}
 
-			for (int j = 0; j < dataJSON.length(); j++) {
-				JSONObject jsonObject = dataJSON.getJSONObject(j);
-				Iterator<String> keys = jsonObject.keys();
+				for (int j = 0; j < dataJSON.length(); j++) {
+					JSONObject jsonObject = dataJSON.getJSONObject(j);
+					Iterator<String> keys = jsonObject.keys();
 
-				while (keys.hasNext()) {
-					String key = keys.next();
-					if (key.equals(whereKey) && jsonObject.getString(key).equals(whereValue)) {
+					while (keys.hasNext()) {
+						String key = keys.next();
+						if (key.equalsIgnoreCase(whereKey) && jsonObject.getString(key).equalsIgnoreCase(whereValue)) {
+							for (int i = 0; i < setParams.length; i++) {
+								setParams[i] = setParams[i].trim();
+								String setkey = setParams[i].split("=")[0];
+								String newValue = setParams[i].split("=")[1];
+								newValue = newValue.replaceAll("[\'\"]", "");
+								if (!keyExists(setkey, dataID)) {
+									throw new Exception("Key Does Not Exist - Please check your syntax");
+								}
+								System.out.println("Gonna update" + jsonObject);
+								jsonObject.put(setkey, newValue);
+							}
+						}
+
+					}
+					System.out.println(jsonObject);
+				}
+			} else {
+				String setkey = null;
+				String newValue = null;
+				for (int j = 0; j < dataJSON.length(); j++) {
+					int trueCount = 0;
+					JSONObject jsonObject = dataJSON.getJSONObject(j);
+					Iterator<String> keys = jsonObject.keys();
+					System.out.println("Checking: " + jsonObject);
+					while (keys.hasNext()) {
+						String key = keys.next();
+						for (int k = 0; k < whereConditions.length; k++) {
+							String whereClauseC = whereConditions[k].trim();
+							String whereKey = whereClauseC.split("=")[0];
+							String whereValue = whereClauseC.split("=")[1];
+							Integer whereID = valueExists(whereValue, dataID);
+							if (!keyExists(whereKey, dataID) || (whereID == -1)) {
+								throw new Exception("Invalid WHERE Conditionss - Please try again"
+										+ keyExists(whereKey, dataID) + " " + whereID);
+							}
+							if (key.equalsIgnoreCase(whereKey)
+									&& jsonObject.getString(key).equalsIgnoreCase(whereValue)) {
+								trueCount++;
+							}
+						}
+					}
+
+					if (isAnd && trueCount == whereConditions.length) {
 						for (int i = 0; i < setParams.length; i++) {
 							setParams[i] = setParams[i].trim();
-							String setkey = setParams[i].split("=")[0];
-							String newValue = setParams[i].split("=")[1];
+							setkey = setParams[i].split("=")[0];
+							newValue = setParams[i].split("=")[1];
 							newValue = newValue.replaceAll("[\'\"]", "");
 							if (!keyExists(setkey, dataID)) {
 								throw new Exception("Key Does Not Exist - Please check your syntax");
 							}
 							jsonObject.put(setkey, newValue);
 						}
+						System.out.println("Updated: " + jsonObject);
+					}
+					System.out.println("TrueC: " + trueCount);
+					if (isOr && trueCount > 0) {
+						for (int i = 0; i < setParams.length; i++) {
+							setParams[i] = setParams[i].trim();
+							setkey = setParams[i].split("=")[0];
+							newValue = setParams[i].split("=")[1];
+							newValue = newValue.replaceAll("[\'\"]", "");
+							if (!keyExists(setkey, dataID)) {
+								throw new Exception("Key Does Not Exist - Please check your syntax");
+							}
+							jsonObject.put(setkey, newValue);
+						}
+						System.out.println("Updated: " + jsonObject);
 					}
 
 				}
-
 			}
+
 			FileWriter updateFile = new FileWriter(tableFile);
 			updateFile.write(object.toString());
 			updateFile.close();

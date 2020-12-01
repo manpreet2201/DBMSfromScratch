@@ -1,0 +1,53 @@
+/* created with ERDot < https://github.com/ehne/ERDot > */
+digraph G {
+    graph [
+        nodesep=0.5;
+        rankdir="LR";
+        cencentrate=true;
+        splines="spline";
+        fontname="Helvetica";
+        pad="0.2,0.2",
+        label="",
+        
+    ];
+    
+    node [shape=plain, fontname="Helvetica"];
+    edge [
+        dir=both,
+        fontsize=12,
+        arrowsize=0.9,
+        penwidth=1.0,
+        labelangle=32,
+        labeldistance=1.8,
+        fontname="Helvetica"
+    ];
+    
+    PERSONS [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>PERSONS</i></td></tr>
+        <tr><td port="PERSONID" align="left" cellpadding="5">PERSONID <font color="grey60">INT</font></td></tr>
+        <tr><td port="LASTNAME" align="left" cellpadding="5">LASTNAME <font color="grey60">VARCHAR</font></td></tr>
+        <tr><td port="ADDRESS" align="left" cellpadding="5">ADDRESS <font color="grey60">VARCHAR</font></td></tr>
+        <tr><td port="FIRSTNAME" align="left" cellpadding="5">FIRSTNAME <font color="grey60">VARCHAR</font></td></tr>
+    </table>>];
+    abc [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>abc</i></td></tr>
+        <tr><td port="NAME" align="left" cellpadding="5">NAME <font color="grey60">INT</font></td></tr>
+    </table>>];
+    popeye [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>popeye</i></td></tr>
+    </table>>];
+    NBN [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>NBN</i></td></tr>
+        <tr><td port="NAME" align="left" cellpadding="5">NAME <font color="grey60">INT</font></td></tr>
+        <tr><td port="age" align="left" cellpadding="5">age <font color="grey60">varchar</font></td></tr>
+    </table>>];
+
+
+
+    
+
+}

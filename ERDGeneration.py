@@ -3,18 +3,12 @@ import os
 import json
 import sys
 
-databaseName = str(sys.argv[1])
+databaseName = str("src/files/"+sys.argv[1])
 
 def generateERD():
     currendirectory = os.getcwd()+"/"
     subprocess.run("erdot graphoutput.json",shell=True, check=True)
-    subprocess.run("dot -Tpng graphoutput.dot -o output.png",shell=True, check=True)
-# subprocess.call("cd "+os.getcwd()+"/")
-# subprocess.call("erdot exampleERD.json")
-# subprocess.call(["command1", "arg1", "arg2"])
-# dot -Tpng exampleERD.dot -o output.png
-# subprocess.Popen("ls", cwd=currendirectory)
-
+    subprocess.run("dot -Tpng graphoutput.dot -o "+sys.argv[1]+"_ERD.png",shell=True, check=True)
 
 def generateJsonForDatabase(databaseName):
     construct_json=""

@@ -117,7 +117,7 @@ public class Create {
 		}
 		java.util.List<String> results = new ArrayList<String>();
 
-		File[] files = new File("/Users/manpreetsingh/Documents/dataproject5408/src/files/" + databasename).listFiles();
+		File[] files = new File("src/files/" + databasename).listFiles();
 		// If this pathname does not denote a directory, then listFiles() returns null.
 
 		for (File file : files) {
@@ -150,7 +150,7 @@ public class Create {
 			obj1.put("columnlist", arrayElementOneArray);
 			try {
 				File file = new File("src/files/" + databasename + "/" + table + ".json");
-				File file1 = new File("/Users/manpreetsingh/Documents/dataproject5408/src/metadata/" + table + ".json");
+				File file1 = new File("src/metadata/" + table + ".json");
 
 				file.createNewFile();
 				file1.createNewFile();

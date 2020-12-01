@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-01T04:10:23.967695Z</date>
+  <millis>1606795823967</millis>
+  <nanos>695000</nanos>
+  <sequence>4</sequence>
+  <logger>logging.EventLogger</logger>
+  <level>INFO</level>
+  <class>logging.EventLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>query: CREATE TABLE MN, databasename: jay, tablename: MN, query successful </message>
+</record>

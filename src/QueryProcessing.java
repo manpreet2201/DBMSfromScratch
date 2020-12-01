@@ -16,6 +16,7 @@ public class QueryProcessing {
 
 			Create c;
 			if (sql.contains("PRIMARY KEY")) {
+				System.out.println("Here");
 				try {
 					c = new Create();
 					c.createTableKeys(sql, databasename);
@@ -23,6 +24,7 @@ public class QueryProcessing {
 					e.printStackTrace();
 				}
 			} else {
+				System.out.println("norm");
 				try {
 					c = new Create();
 					c.createTable(sql, databasename);

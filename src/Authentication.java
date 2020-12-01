@@ -78,8 +78,10 @@ public class Authentication {
 			dumpCreationObject.CreateDump("src/files/JAY");
 			break;
 		case 4:
-			Process p = Runtime.getRuntime().exec("python3 ERDExample.py");
-			System.out.println("Database file generated");
+			System.out.println("Enter the database Name");
+			String DatabaseForERD = scannerObject.next();
+			Process p = Runtime.getRuntime().exec("python3 ERDGeneration.py "+DatabaseForERD);
+			System.out.println("Database ERD generated");
 			break;
 		default:
 			System.out.println("invalid choice");

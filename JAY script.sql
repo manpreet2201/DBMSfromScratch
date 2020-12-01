@@ -1,5 +1,10 @@
-
-
-
-
-
+create table KKKKKKKK()
+create table PERSONS(PERSONID VARCHAR,ADDRESS VARCHAR)
+create table RTTT()
+create table TEST(LASTNAME INT,ADDRESS VARCHAR)
+create table OPOP()
+create table TABLE()
+create table MN()
+create table TEST(LASTNAME INT,ADDRESS VARCHAR)
+create table WQER()
+create table POPEYE(PERSONID INT,*ORDERID INT)

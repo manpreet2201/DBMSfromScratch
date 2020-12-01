@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import logging.EventLogger;
 import logging.GeneralLogger;
+import org.json.JSONException;
 
 public class Authentication {
 	String credentialsFile = "credentials.csv";
@@ -59,7 +60,7 @@ public class Authentication {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, JSONException {
 		Authentication testObject = new Authentication();
 		DumpCreation dumpCreationObject = new DumpCreation();
 		Scanner scannerObject = new Scanner(System.in);
@@ -81,7 +82,7 @@ public class Authentication {
 		case 3:
 			System.out.println("Enter the database Name");
 			String DatabaseName = scannerObject.next();
-			dumpCreationObject.CreateDump("src/files/JAY");
+			dumpCreationObject.CreateDump(DatabaseName);
 			break;
 		case 4:
 			System.out.println("Enter the database Name");

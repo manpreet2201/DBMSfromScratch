@@ -15,11 +15,20 @@ public class QueryProcessing {
 		else if (sql.toUpperCase().contains("CREATE") && sql.toUpperCase().contains("TABLE") && exit == true) {
 
 			Create c;
-			try {
-				c = new Create();
-				c.createTable(sql, databasename);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (sql.contains("PRIMARY KEY")) {
+				try {
+					c = new Create();
+					c.createTableKeys(sql, databasename);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					c = new Create();
+					c.createTable(sql, databasename);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 		} else if (sql.toUpperCase().contains("INSERT")) {
@@ -83,6 +92,10 @@ public class QueryProcessing {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (sql.toUpperCase().contains("TRUNCATE") && sql.toUpperCase().contains("TABLE")
+				&& keywords.length == 3) {
+			Delete delete = new Delete();
+			delete.deleteQuery(sql, databasename);
 		} else {
 			System.out.println("Incorrect Syntax - Please try again");
 		}

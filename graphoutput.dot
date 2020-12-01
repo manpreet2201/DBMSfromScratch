@@ -22,6 +22,10 @@ digraph G {
         fontname="Helvetica"
     ];
     
+    KKKKKKKK [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>KKKKKKKK</i></td></tr>
+    </table>>];
     PERSONS [ label=<
         <table border="0" cellborder="1" cellspacing="0" >
         <tr><td><i>PERSONS</i></td></tr>
@@ -30,21 +34,56 @@ digraph G {
         <tr><td port="ADDRESS" align="left" cellpadding="5">ADDRESS <font color="grey60">VARCHAR</font></td></tr>
         <tr><td port="FIRSTNAME" align="left" cellpadding="5">FIRSTNAME <font color="grey60">VARCHAR</font></td></tr>
     </table>>];
-    abc [ label=<
+    RTTT [ label=<
         <table border="0" cellborder="1" cellspacing="0" >
-        <tr><td><i>abc</i></td></tr>
-        <tr><td port="NAME" align="left" cellpadding="5">NAME <font color="grey60">INT</font></td></tr>
+        <tr><td><i>RTTT</i></td></tr>
     </table>>];
-    popeye [ label=<
+    TEST [ label=<
         <table border="0" cellborder="1" cellspacing="0" >
-        <tr><td><i>popeye</i></td></tr>
+        <tr><td><i>TEST</i></td></tr>
+        <tr><td port="LASTNAME" align="left" cellpadding="5">LASTNAME <font color="grey60">VARCHAR</font></td></tr>
+        <tr><td port="TESTID" align="left" cellpadding="5">TESTID <font color="grey60">INT</font></td></tr>
+        <tr><td port="ADDRESS" align="left" cellpadding="5">ADDRESS <font color="grey60">VARCHAR</font></td></tr>
+        <tr><td port="FIRSTNAME" align="left" cellpadding="5">FIRSTNAME <font color="grey60">VARCHAR</font></td></tr>
     </table>>];
-    NBN [ label=<
+    OPOP [ label=<
         <table border="0" cellborder="1" cellspacing="0" >
-        <tr><td><i>NBN</i></td></tr>
-        <tr><td port="NAME" align="left" cellpadding="5">NAME <font color="grey60">INT</font></td></tr>
-        <tr><td port="age" align="left" cellpadding="5">age <font color="grey60">varchar</font></td></tr>
+        <tr><td><i>OPOP</i></td></tr>
     </table>>];
+    TABLE [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>TABLE</i></td></tr>
+    </table>>];
+    MN [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>MN</i></td></tr>
+    </table>>];
+    WQER [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>WQER</i></td></tr>
+    </table>>];
+    POPEYE [ label=<
+        <table border="0" cellborder="1" cellspacing="0" >
+        <tr><td><i>POPEYE</i></td></tr>
+        <tr><td port="PERSONID" align="left" cellpadding="5">PERSONID <font color="grey60">INT</font></td></tr>
+        <tr><td port="ORDERNUMBER" align="left" cellpadding="5">ORDERNUMBER <font color="grey60">INT</font></td></tr>
+        <tr><td port="ORDERID" align="left" cellpadding="5">PK ORDERID <font color="grey60">INT</font></td></tr>
+        <tr><td port="TESTID" align="left" cellpadding="5">TESTID <font color="grey60">INT</font></td></tr>
+    </table>>];
+
+
+    POPEYE:PERSONID->PERSONS:PERSONID [
+        arrowhead=noneotee,
+
+        arrowtail=ocrow,
+    ];
+
+
+    POPEYE:TESTID->TEST:TESTID [
+        arrowhead=noneotee,
+
+        arrowtail=ocrow,
+    ];
 
 
 

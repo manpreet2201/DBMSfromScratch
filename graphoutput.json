@@ -1,22 +1,43 @@
 {
 "tables":{
-"PERSONS":{
+"KKKKKKKK":{
+
+},"PERSONS":{
 "PERSONID":"INT",
 "LASTNAME":"VARCHAR",
 "ADDRESS":"VARCHAR",
 "FIRSTNAME":"VARCHAR"
 
-},"abc":{
-"NAME":"INT"
+},"RTTT":{
 
-},"popeye":{
+},"TEST":{
+"LASTNAME":"VARCHAR",
+"TESTID":"INT",
+"ADDRESS":"VARCHAR",
+"FIRSTNAME":"VARCHAR"
 
-},"NBN":{
-"NAME":"INT",
-"age":"varchar"
+},"OPOP":{
+
+},"TABLE":{
+
+},"MN":{
+
+},"TEST":{
+"LASTNAME":"VARCHAR",
+"TESTID":"INT",
+"ADDRESS":"VARCHAR",
+"FIRSTNAME":"VARCHAR"
+
+},"WQER":{
+
+},"POPEYE":{
+"PERSONID":"INT",
+"ORDERNUMBER":"INT",
+"*ORDERID":"INT",
+"TESTID":"INT"
 
 }},
-"relations":[],
+"relations":["POPEYE:PERSONID *--1 PERSONS:PERSONID","POPEYE:TESTID *--1 TEST:TESTID"],
 "rankAdjustments":"",
 "label":""
 }

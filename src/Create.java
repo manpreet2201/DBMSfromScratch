@@ -134,8 +134,10 @@ public class Create {
 		}
 		if (exit) {
 			JSONObject obj = new JSONObject();
+			JSONObject obj1 = new JSONObject();
 			JSONArray datalistarray = new JSONArray();
 			obj.put("tablename", table);
+			obj1.put("tablename", table);
 			obj.put("datalist", datalistarray);
 			JSONArray arrayElementOneArray = new JSONArray();
 			JSONObject arrayElementOneArrayElementOne = new JSONObject();
@@ -145,13 +147,19 @@ public class Create {
 			}
 			arrayElementOneArray.put(arrayElementOneArrayElementOne);
 			obj.put("columnlist", arrayElementOneArray);
+			obj1.put("columnlist", arrayElementOneArray);
 			try {
 				File file = new File("src/files/" + databasename + "/" + table + ".json");
+				File file1 = new File("/Users/manpreetsingh/Documents/dataproject5408/src/metadata/" + table + ".json");
 
 				file.createNewFile();
+				file1.createNewFile();
 				FileWriter writer = new FileWriter(file);
+				FileWriter writer1 = new FileWriter(file1);
 				writer.write(obj.toString());
+				writer1.write(obj1.toString());
 				writer.close();
+				writer1.close();
 				log2.log(sql, databasename, table);
 			} catch (IOException e) {
 				log2.error(sql, databasename, table);

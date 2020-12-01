@@ -2,9 +2,9 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2020-12-01T04:04:05.239870Z</date>
-  <millis>1606795445239</millis>
-  <nanos>870000</nanos>
+  <date>2020-12-01T04:46:19.821095Z</date>
+  <millis>1606797979821</millis>
+  <nanos>95000</nanos>
   <sequence>3</sequence>
   <logger>logging.GeneralLogger</logger>
   <level>INFO</level>

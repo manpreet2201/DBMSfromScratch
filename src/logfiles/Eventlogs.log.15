@@ -2,9 +2,9 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2020-12-01T04:08:04.545520Z</date>
-  <millis>1606795684545</millis>
-  <nanos>520000</nanos>
+  <date>2020-12-01T04:44:54.726992Z</date>
+  <millis>1606797894726</millis>
+  <nanos>992000</nanos>
   <sequence>0</sequence>
   <logger>logging.EventLogger</logger>
   <level>INFO</level>
@@ -14,26 +14,26 @@
   <message>user authenticated: ram</message>
 </record>
 <record>
-  <date>2020-12-01T04:08:47.523295Z</date>
-  <millis>1606795727523</millis>
-  <nanos>295000</nanos>
+  <date>2020-12-01T04:45:13.556407Z</date>
+  <millis>1606797913556</millis>
+  <nanos>407000</nanos>
   <sequence>2</sequence>
   <logger>logging.EventLogger</logger>
   <level>INFO</level>
   <class>logging.EventLogger</class>
   <method>log</method>
   <thread>1</thread>
-  <message>query: CREATE TABLE MN, databasename: jay, tablename: MN, query successful </message>
+  <message>query: CREATE TABLE WQER, databasename: jay, tablename: WQER, query successful </message>
 </record>
 <record>
-  <date>2020-12-01T04:10:23.967695Z</date>
-  <millis>1606795823967</millis>
-  <nanos>695000</nanos>
+  <date>2020-12-01T04:46:19.831943Z</date>
+  <millis>1606797979831</millis>
+  <nanos>943000</nanos>
   <sequence>4</sequence>
   <logger>logging.EventLogger</logger>
   <level>INFO</level>
   <class>logging.EventLogger</class>
   <method>log</method>
   <thread>1</thread>
-  <message>query: CREATE TABLE MN, databasename: jay, tablename: MN, query successful </message>
+  <message>query: CREATE TABLE RET CNAME INT INFO VARCHAR , databasename: jay, tablename: RET, query successful </message>
 </record>

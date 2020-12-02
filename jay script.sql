@@ -1,0 +1,5 @@
+create table POPP()
+create table PERSONS(PERSONID VARCHAR,ADDRESS VARCHAR)
+create table TEST(LASTNAME INT,ADDRESS VARCHAR)
+create table TABLE()
+create table POPEYE(PERSONID INT,*ORDERID INT)

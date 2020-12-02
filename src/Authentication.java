@@ -18,11 +18,11 @@ public class Authentication {
 		EventLogger log2 = new EventLogger();
 		credential = "";
 		boolean isRegistered = false;
-		File file = new File("src/" + credentialsFile);
+		File file = new File(credentialsFile);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
-		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader("src/" + credentialsFile));
+		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader(credentialsFile));
 		while ((credential = bufferedReaderObject.readLine()) != null) {
 			String[] credentials = credential.split(",");
 			if (credentials[0].toLowerCase().equals(username.toLowerCase())) {
@@ -59,10 +59,11 @@ public class Authentication {
 		}
 	}
 
-	public void authenticate(String username, String password) throws IOException {
+	public void authenticate(String username, String password, String operation) throws IOException {
 		EventLogger log2 = new EventLogger();
+		Scanner scannerObject = new Scanner(System.in);
 		Boolean isAuth = false;
-		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader("src/" + credentialsFile));
+		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader(credentialsFile));
 		while ((credential = bufferedReaderObject.readLine()) != null) {
 			String[] credentials = credential.split(",");
 			if (credentials != null) {
@@ -72,8 +73,26 @@ public class Authentication {
 						System.out.println("Authenticated");
 						isAuth = true;
 						log2.authlog(username);
-						QueryInit qInit = new QueryInit();
-						qInit.init();
+						if (operation.equals("queryInitialization")) {
+							QueryInit qInit = new QueryInit();
+							qInit.init();
+						} else if (operation.equals("dumpcreation")) {
+							DumpCreation dumpCreationObject = new DumpCreation();
+							System.out.println("Enter the database Name");
+							String DatabaseName = scannerObject.next();
+							try {
+								dumpCreationObject.CreateDump(DatabaseName);
+							} catch (IOException e) {
+								e.printStackTrace();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						} else if (operation.equals("ERDGeneration")) {
+							System.out.println("Enter the database Name");
+							String DatabaseForERD = scannerObject.next();
+							Process p = Runtime.getRuntime().exec("python3 ERDGeneration.py " + DatabaseForERD);
+							System.out.println("Database ERD generated");
+						}
 					}
 				}
 			}
@@ -84,10 +103,8 @@ public class Authentication {
 			try {
 				main(null);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -110,20 +127,13 @@ public class Authentication {
 			testObject.register(username, password);
 			break;
 		case 2:
-			testObject.authenticate(username, password);
+			testObject.authenticate(username, password, "queryInitialization");
 			break;
 		case 3:
-			System.out.println("Enter the database Name");
-			String DatabaseName = scannerObject.next();
-			dumpCreationObject.CreateDump(DatabaseName);
+			testObject.authenticate(username, password, "dumpcreation");
 			break;
 		case 4:
-			System.out.println("Enter the database Name");
-			String DatabaseForERD = scannerObject.next();
-			System.out.println(DatabaseForERD);
-			File file = new File("ERDGeneration.py");
-			Process p = Runtime.getRuntime().exec("python3 ERDGeneration.py " + DatabaseForERD);
-			System.out.println("Database ERD generated");
+			testObject.authenticate(username, password, "ERDGeneration");
 			break;
 		default:
 			System.out.println("invalid choice");

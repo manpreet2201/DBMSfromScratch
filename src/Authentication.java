@@ -75,7 +75,7 @@ public class Authentication {
 						log2.authlog(username);
 						if (operation.equals("queryInitialization")) {
 							QueryInit qInit = new QueryInit();
-							qInit.init();
+							qInit.init(username);
 						} else if (operation.equals("dumpcreation")) {
 							DumpCreation dumpCreationObject = new DumpCreation();
 							System.out.println("Enter the database Name");

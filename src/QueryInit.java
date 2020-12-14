@@ -10,7 +10,7 @@ import org.json.simple.parser.ParseException;
 
 public class QueryInit {
 
-	public void init() {
+	public void init(String username) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Choose a schema OR Drop a schema: ");
 		String sql = scanner.nextLine();
@@ -44,7 +44,7 @@ public class QueryInit {
 					} else {
 
 						QueryProcessing q1 = new QueryProcessing();
-						q1.QProcess(sql1, databasename);
+						q1.QProcess(sql1, databasename, username, false);
 					}
 				}
 
@@ -57,7 +57,7 @@ public class QueryInit {
 			}
 		} else {
 			QueryProcessing q1 = new QueryProcessing();
-			q1.QProcess(sql, null);
+			q1.QProcess(sql, null, username, false);
 		}
 
 	}

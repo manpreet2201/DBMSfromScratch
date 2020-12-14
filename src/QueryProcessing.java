@@ -2,7 +2,7 @@ public class QueryProcessing {
 	String databasename = null;
 	boolean exit = true;
 
-	public void QProcess(String sql, String databasename) {
+	public void QProcess(String sql, String databasename, String username, Boolean fromTransactions) {
 		String[] keywords = sql.trim().split(" ");
 
 		if (sql.toUpperCase().contains("CREATE") && sql.toUpperCase().contains("DATABASE")) {
@@ -96,6 +96,9 @@ public class QueryProcessing {
 				&& keywords.length == 3) {
 			Delete delete = new Delete();
 			delete.deleteQuery(sql, databasename);
+		} else if (sql.trim().equalsIgnoreCase("START TRANSACTION") || sql.trim().equalsIgnoreCase("BEGIN WORK")) {
+			Transactions transactions = new Transactions();
+			transactions.beginTransactions(username, databasename);
 		} else {
 			System.out.println("Incorrect Syntax - Please try again");
 		}

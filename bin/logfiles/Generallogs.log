@@ -886,3 +886,31 @@
   <message>querytype:Create, databasename: popeye, query initiated </message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-13T17:08:01.760912Z</date>
+  <millis>1607879281760</millis>
+  <nanos>912000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-13T17:08:08.181632Z</date>
+  <millis>1607879288181</millis>
+  <nanos>632000</nanos>
+  <sequence>3</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+</log>

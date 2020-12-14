@@ -914,3 +914,183 @@
   <message>querytype:Create, databasename: jay, query initiated </message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T00:38:18.389909Z</date>
+  <millis>1607906298389</millis>
+  <nanos>909000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T00:38:18.406262Z</date>
+  <millis>1607906298406</millis>
+  <nanos>262000</nanos>
+  <sequence>3</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T19:29:15.722990Z</date>
+  <millis>1607974155722</millis>
+  <nanos>990000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Select, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:29:46.845761Z</date>
+  <millis>1607974186845</millis>
+  <nanos>761000</nanos>
+  <sequence>3</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Select, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:30:21.413492Z</date>
+  <millis>1607974221413</millis>
+  <nanos>492000</nanos>
+  <sequence>5</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:30:51.450852Z</date>
+  <millis>1607974251450</millis>
+  <nanos>852000</nanos>
+  <sequence>6</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T19:35:08.107013Z</date>
+  <millis>1607974508107</millis>
+  <nanos>13000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:35:46.450991Z</date>
+  <millis>1607974546450</millis>
+  <nanos>991000</nanos>
+  <sequence>2</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:36:06.876567Z</date>
+  <millis>1607974566876</millis>
+  <nanos>567000</nanos>
+  <sequence>3</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T19:37:19.996591Z</date>
+  <millis>1607974639996</millis>
+  <nanos>591000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+<record>
+  <date>2020-12-14T19:37:51.178229Z</date>
+  <millis>1607974671178</millis>
+  <nanos>229000</nanos>
+  <sequence>3</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Update, databasename: jay, query initiated </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T20:02:25.892310Z</date>
+  <millis>1607976145892</millis>
+  <nanos>310000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-12-14T20:03:09.798988Z</date>
+  <millis>1607976189798</millis>
+  <nanos>988000</nanos>
+  <sequence>1</sequence>
+  <logger>logging.GeneralLogger</logger>
+  <level>INFO</level>
+  <class>logging.GeneralLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>querytype:Create, databasename: jay, query initiated </message>
+</record>
+</log>

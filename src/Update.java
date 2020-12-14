@@ -27,6 +27,23 @@ public class Update {
 		return false;
 	}
 
+	public String isTableLocked(String sql, String dbName) {
+		String[] sqlArr = sql.split(" ");
+		String tableName = sqlArr[1];
+		File file = new File("src/files/" + dbName + "/" + tableName + ".json");
+		try {
+			InputStream tableStream = new FileInputStream(file);
+			JSONTokener tokener = new JSONTokener(tableStream);
+			JSONObject object = new JSONObject(tokener);
+			if (!object.getString("lock").equals("0")) {
+				return object.getString("lock");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public Boolean keyExists(String key, HashMap<Integer, HashMap<String, String>> database) {
 		for (int i = 0; i < database.size(); i++) {
 			if (database.get(i).containsKey(key)) {

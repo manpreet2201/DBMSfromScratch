@@ -71,6 +71,7 @@ public class Create {
 		JSONArray datalistarray = new JSONArray();
 		JSONArray relArray = new JSONArray();
 		obj.put("tablename", tableName);
+		obj.put("lock", "0");
 		obj.put("datalist", datalistarray);
 		JSONArray arrayElementOneArray = new JSONArray();
 		JSONObject arrayElementOneArrayElementOne = new JSONObject();
@@ -137,6 +138,7 @@ public class Create {
 			JSONObject obj1 = new JSONObject();
 			JSONArray datalistarray = new JSONArray();
 			obj.put("tablename", table);
+			obj.put("lock", "0");
 			obj1.put("tablename", table);
 			obj.put("datalist", datalistarray);
 			JSONArray arrayElementOneArray = new JSONArray();

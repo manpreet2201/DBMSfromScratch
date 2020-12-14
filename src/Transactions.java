@@ -1,14 +1,82 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class Transactions {
+
+	public ArrayList<String> lockedTables = new ArrayList<String>();
+
+	public void releaseLocks(String dbName, String username) {
+		if (lockedTables.size() == 0) {
+			System.out.println("No Locked Tables");
+		} else {
+			for (String tableName : lockedTables) {
+				File file = new File("src/files/" + dbName + "/" + tableName + ".json");
+				try {
+					InputStream tableStream = new FileInputStream(file);
+					JSONTokener tokener = new JSONTokener(tableStream);
+					JSONObject object = new JSONObject(tokener);
+					if (object.getString("lock").equalsIgnoreCase("1_" + username)) {
+						object.put("lock", 0);
+						FileWriter updateFile = new FileWriter(file);
+						updateFile.write(object.toString());
+						updateFile.close();
+						System.out.println("Table lock released from " + dbName + " > " + tableName);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void lockTables(String queryString, String dbName, String username) {
+		String tableName = "";
+		String[] queryType = queryString.split(" ");
+		if (queryType[0].equalsIgnoreCase("UPDATE")) {
+			tableName = queryType[1];
+			lockedTables.add(tableName);
+			setLock(tableName, dbName, username);
+		}
+		if (queryType[0].equalsIgnoreCase("INSERT")) {
+			tableName = queryType[2];
+			lockedTables.add(tableName);
+			setLock(tableName, dbName, username);
+		}
+		if (queryType[0].equalsIgnoreCase("DELETE")) {
+			tableName = queryType[2];
+			lockedTables.add(tableName);
+			setLock(tableName, dbName, username);
+		}
+	}
+
+	public void setLock(String tableName, String dbName, String username) {
+		File file = new File("src/files/" + dbName + "/" + tableName + ".json");
+		try {
+			InputStream tableStream = new FileInputStream(file);
+			JSONTokener tokener = new JSONTokener(tableStream);
+			JSONObject object = new JSONObject(tokener);
+			if (object.getString("lock").equals("0")) {
+				object.put("lock", "1_" + username);
+				FileWriter updateFile = new FileWriter(file);
+				updateFile.write(object.toString());
+				updateFile.close();
+				System.out.println("Table lock set on " + dbName + " > " + tableName + " by user:" + username);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void beginTransactions(String username, String dbName) {
 		System.out.println("Starting Transaction in Schema " + dbName + " by User " + username);
@@ -21,8 +89,14 @@ public class Transactions {
 		while (bool) {
 			System.out.println("Enter Sequence " + seqCounter + ":");
 			String queryString = scanner.nextLine();
+			String queryType = queryString.split(" ")[0];
+			if (queryType.equalsIgnoreCase("UPDATE") || queryType.equalsIgnoreCase("INSERT")
+					|| queryType.equalsIgnoreCase("DELETE")) {
+				lockTables(queryString, dbName, username);
+			}
 			if (queryString.trim().equalsIgnoreCase("COMMIT")) {
 				bool = false;
+				releaseLocks(dbName, username);
 				break;
 			}
 			sequenceMap.put(seqCounter, queryString);

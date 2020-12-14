@@ -36,6 +36,11 @@ public class QueryProcessing {
 			Insert c;
 			try {
 				c = new Insert();
+				if (c.isTableLocked(sql, databasename) != null) {
+					String user = c.isTableLocked(sql, databasename).split("_")[1];
+					System.out.println("Table is locked by " + user);
+					throw new Exception("Table Lock In Place");
+				}
 				c.insert(sql, databasename);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -58,6 +63,11 @@ public class QueryProcessing {
 				if (!update.tableExists(sql, databasename)) {
 					throw new Exception("Table Does Not Exist");
 				}
+				if (update.isTableLocked(sql, databasename) != null) {
+					String user = update.isTableLocked(sql, databasename).split("_")[1];
+					System.out.println("Table is locked by " + user);
+					throw new Exception("Table Lock In Place");
+				}
 				update.updateTable(sql, databasename);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -68,6 +78,11 @@ public class QueryProcessing {
 				delete = new Delete();
 				if (!delete.tableExists(sql, databasename)) {
 					throw new Exception("Table Does Not Exist");
+				}
+				if (delete.isTableLocked(sql, databasename) != null) {
+					String user = delete.isTableLocked(sql, databasename).split("_")[1];
+					System.out.println("Table is locked by " + user);
+					throw new Exception("Table Lock In Place");
 				}
 				delete.deleteQuery(sql, databasename);
 			} catch (Exception e) {

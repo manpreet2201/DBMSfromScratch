@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.json.JSONException;
 
@@ -43,7 +45,8 @@ public class Authentication {
 		}
 		if (!isRegistered) {
 			BufferedWriter bufferedWriterObject = new BufferedWriter(new FileWriter(credentialsFile, true));
-			bufferedWriterObject.write(username + "," + password + "\n");
+			var hashedValue = generateHash(password);
+			bufferedWriterObject.write(username + "," + hashedValue + "\n");
 			bufferedWriterObject.close();
 			System.out.println("User Registered successfully");
 			log2.reglog(username);
@@ -59,6 +62,24 @@ public class Authentication {
 		}
 	}
 
+	public static String generateHash(String input) {
+		StringBuilder hash = new StringBuilder();
+		try {
+			MessageDigest sha = MessageDigest.getInstance("SHA-1");
+			byte[] hashedBytes = sha.digest(input.getBytes());
+			char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+					'a', 'b', 'c', 'd', 'e', 'f' };
+			for (int idx = 0; idx < hashedBytes.length;idx++) {
+				byte b = hashedBytes[idx];
+				hash.append(digits[(b & 0xf0) >> 4]);
+				hash.append(digits[b & 0x0f]);
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return hash.toString();
+	}
+
 	public void authenticate(String username, String password, String operation) throws IOException {
 		EventLogger log2 = new EventLogger();
 		Scanner scannerObject = new Scanner(System.in);
@@ -68,8 +89,9 @@ public class Authentication {
 			String[] credentials = credential.split(",");
 			if (credentials != null) {
 				if (credentials[0] != "" || credentials[1] != "") {
+					String hashedPassword = generateHash(password);
 					if (credentials[0].toLowerCase().equals(username.toLowerCase())
-							&& credentials[1].equals(password)) {
+							&& hashedPassword.equals(credentials[1])) {
 						System.out.println("Authenticated");
 						isAuth = true;
 						log2.authlog(username);
@@ -140,6 +162,7 @@ public class Authentication {
 		}
 
 //https://stackabuse.com/reading-and-writing-csvs-in-java/
+// https://veerasundar.com/blog/2010/09/storing-passwords-in-java-web-application/#:~:text=To%20generate%20hash%2C%20you%20can,mGod'%20or%20anything%20you%20wish.
 
 	}
 }
